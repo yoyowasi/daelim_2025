@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk:
       flutter
+  go_router: ^14.8.1
 
       # Add this line to include the images directory
 
