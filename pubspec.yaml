@@ -31,7 +31,9 @@ dependencies:
   flutter:
     sdk:
       flutter
+  lucide_icons_flutter: ^2.0.5
   go_router: ^14.8.1
+
 
       # Add this line to include the images directory
 
