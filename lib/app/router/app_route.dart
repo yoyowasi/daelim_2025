@@ -1,6 +1,7 @@
 enum AppRoute {
   start,
   main,
+  result,
 }
 
 extension AppRouteExtension on AppRoute {

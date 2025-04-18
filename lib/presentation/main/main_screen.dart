@@ -1,7 +1,9 @@
-import 'package:daelim_2025/presentation/common/widgets/white_box.dart';
+import 'package:daelim_2025/app/router/app_route.dart';
+import 'package:daelim_2025/presentation/main/widgets/gender_box.dart';
 import 'package:daelim_2025/presentation/main/widgets/height_box.dart';
 import 'package:daelim_2025/presentation/main/widgets/in_de_container.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -13,77 +15,95 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _age = 0;
   int _weight = 0;
-  
+  double _height = 100.0;
+  Gender _gender = Gender.male;
+
+
+  void _onCalculated(){
+    debugPrint('나이: $_age');
+    debugPrint('몸무게: $_weight');
+    debugPrint('키: $_height');
+    debugPrint('성별: $_gender');
+
+    final chHeight = _height.round() / 100;
+
+    final bmi = _weight/(chHeight * chHeight);
+
+    debugPrint('BMI: $bmi');
+
+    context.pushNamed(
+      AppRoute.result.name,
+      queryParameters: {
+        'bmi':bmi.toStringAsFixed(2),
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF4F3FF),
+      backgroundColor: Color(0xffF4F3FF),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 30, right: 30, bottom: 90),
           child: Column(
-            // 오타: spacing은 Column에 없음, 대신 SizedBox로 간격 조절
+            spacing: 25,
             children: [
-              const SizedBox(height: 35),
-              const Text(
-                'BMI CALCULATOR',
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-              // #region 나이,몸무게 입력력
-              const SizedBox(height: 25),
+              SizedBox(height: 35),
+              //#region 타이틀틀
+              Text('BMI CALCULATOR', style: TextStyle(fontSize: 20)),
+              //#region 나이, 몸무게 입력
               Row(
-                // 오타: Row에도 spacing 없음 -> SizedBox로 처리
+                spacing: 20,
                 children: [
-                  Expanded(child: InDeContainer(
-                    title: 'Age', 
-                    value: _age, 
-                    onMinus: () { 
-                      if(_age > 0){
+                  Expanded(
+                    child: InDeContainer(
+                      title: 'Age',
+                      value: _age,
+                      onMinus: () {
+                        if (_age == 0) return;
                         setState(() => _age--);
-                        
-                      }
-                      debugPrint('Age: 마이너스 클릭');
-                     }, 
-                    onPlus: () {  
-                      setState(() => _age++);
-                      debugPrint('Age: 플러스 클릭');
-                    },
-                  )),
-                  const SizedBox(width: 20),
-                  Expanded(child: InDeContainer(
-                    title: 'Weight (KG)', 
-                    value: _weight, 
-                    onMinus: () { 
-                      if(_weight == 0){return;}
-                      setState(() => _weight--);
-                      debugPrint('Weight: 마이너스 클릭');
-                     }, 
-                    onPlus: () {  
-                      setState(() => _weight++);
-                      debugPrint('Weight: 플러스 클릭');
-                    },
-                  )),
+                      },
+                      onPlus: () {
+                        setState(() => _age++);
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: InDeContainer(
+                      title: 'Weight',
+                      value: _weight,
+                      onMinus: () {
+                        if (_weight == 0) return;
+                        setState(() => _weight--);
+                      },
+                      onPlus: () {
+                        setState(() => _weight++);
+                      },
+                    ),
+                  ),
                 ],
               ),
-              const SizedBox(height: 25),
+              //키
               HeightBox(
-                
-                )
-              ,
-              const SizedBox(height: 25),
-              WhiteBox(
-                padding: EdgeInsets.all(25),
-                child: SizedBox.shrink(),
+                onChanged: (height) {
+                  _height = height;
+                  debugPrint('키 : $height');
+                },
               ),
-              const SizedBox(height: 25),
+
+              //성별
+              GenderBox(
+                onChanged: (gender) {
+                  _gender = gender;
+                debugPrint('성별: $gender');
+              }),
               SizedBox(
                 width: double.infinity,
                 height: 75,
                 child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Calculate BMI'),
+                  onPressed: _onCalculated,
+                  child: Text('Calculate BMI'),
                 ),
               ),
             ],

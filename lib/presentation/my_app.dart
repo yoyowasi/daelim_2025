@@ -1,6 +1,4 @@
 import 'package:daelim_2025/app/router/app_router.dart';
-import 'package:daelim_2025/presentation/start/start_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {

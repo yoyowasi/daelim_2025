@@ -91,17 +91,17 @@ class StartScreen extends StatelessWidget {
                 SizedBox(height: 60),
                 Image.asset('assets/images/bmi_bike.png'),
                 _buildTitleDesc(),
-                // SizedBox(height: 95),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
+                SizedBox(height: 95),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
-                //     // _buildTitle(),
-                //     // SizedBox(height: 15),
-                //     // _bulidDescription(),
-                //     // SizedBox(height: 40),
-                //   ],
-                // ),
+                    // _buildTitle(),
+                    // SizedBox(height: 15),
+                    // _bulidDescription(),
+                    // SizedBox(height: 40),
+                  ],
+                ),
                 _buildStartButton(context),
               ],
             ),
